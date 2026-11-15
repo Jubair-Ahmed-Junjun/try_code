@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pair Ahmed Jiko - Clinical Biochemist, Molecular Biologist, and Researcher. Portfolio showcasing publications, projects, clinical trials, and professional experience.">
+  <title>Pair Ahmed Jiko · AI-Enhanced Biomedical Portfolio</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter & Outfit -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'], heading: ['Outfit', 'sans-serif'] },
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #07090e; color: #94a3b8; }
+    h1, h2, h3, h4, h5 { font-family: 'Outfit', sans-serif; }
+    .glass-card { background: rgba(15, 23, 42, 0.72); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.07); transition: all 0.3s ease; }
+    .glass-card:hover { border-color: rgba(59, 130, 246, 0.35); box-shadow: 0 8px 30px rgba(10, 102, 194, 0.12); }
+    .dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(6px); transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .dropdown-container:hover .dropdown-menu,
+    .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0); }
+  </style>
+</head>
+<body class="min-h-screen py-5 px-4 sm:px-6 lg:px-8 selection:bg-blue-500/30 selection:text-blue-200">
+
+  <div class="max-w-5xl mx-auto space-y-6">
+
+    <!-- ========== 1. TOP NAVIGATION BAR WITH PUBLICATIONS CATEGORY DROPDOWN ========== -->
+    <header class="glass-card rounded-2xl p-4 flex flex-wrap justify-between items-center gap-4 sticky top-4 z-40">
+      <!-- Live Telemetry Status -->
+      <div class="flex items-center gap-3">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+        </span>
+        <span class="text-xs font-semibold uppercase tracking-wider text-slate-200">AI Copilot Active <span class="hidden sm:inline text-slate-500">• ISO 15189 Lab Ready</span></span>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="flex flex-wrap items-center gap-4 sm:gap-5 text-xs font-medium text-slate-300">
+        <a href="#about" class="hover:text-blue-400 transition py-1">About</a>
+
+        <!-- Interactive Publications Dropdown -->
+        <div class="relative dropdown-container" id="pubNavDropdown">
+          <button type="button" onclick="toggleNavDropdown()" class="flex items-center gap-1.5 hover:text-blue-400 transition py-1 focus:outline-none">
+            <span>Publications</span>
+            <i class="fas fa-chevron-down text-[10px] text-blue-400"></i>
+          </button>
+          
+          <!-- Dropdown Menu -->
+          <div id="pubDropdownMenu" class="dropdown-menu absolute left-0 sm:left-auto sm:right-0 mt-2 w-60 bg-slate-900/95 backdrop-blur-xl border border-slate-700/80 rounded-xl shadow-2xl py-1.5 z-50">
+            <div class="px-3 py-1.5 border-b border-slate-800/80 text-[10px] font-semibold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+              <span>Filter by Category</span>
+              <span class="text-blue-400">7 Total</span>
+            </div>
+            <button onclick="navigateAndFilterPubs('all')" class="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-blue-600/20 hover:text-blue-300 flex items-center justify-between transition">
+              <span><i class="fas fa-layer-group w-4 text-blue-400"></i> All Publications</span>
+              <span class="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-400">7</span>
+            </button>
+            <button onclick="navigateAndFilterPubs('journal')" class="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-blue-600/20 hover:text-blue-300 flex items-center justify-between transition">
+              <span><i class="fas fa-book-medical w-4 text-emerald-400"></i> Journal Articles</span>
+              <span class="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-400">6</span>
+            </button>
+            <button onclick="navigateAndFilterPubs('preprint')" class="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-blue-600/20 hover:text-blue-300 flex items-center justify-between transition">
+              <span><i class="fas fa-file-signature w-4 text-purple-400"></i> Pre-Prints</span>
+              <span class="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-400">1</span>
+            </button>
+            <button onclick="navigateAndFilterPubs('phytochem')" class="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-blue-600/20 hover:text-blue-300 flex items-center justify-between transition">
+              <span><i class="fas fa-seedling w-4 text-amber-400"></i> Phytochemistry & Drug Discovery</span>
+              <span class="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-400">6</span>
+            </button>
+            <button onclick="navigateAndFilterPubs('clinical')" class="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-blue-600/20 hover:text-blue-300 flex items-center justify-between transition">
+              <span><i class="fas fa-hospital-user w-4 text-rose-400"></i> Clinical & Public Health</span>
+              <span class="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-400">1</span>
+            </button>
+          </div>
+        </div>
+
+        <a href="#projects" class="hover:text-blue-400 transition py-1">Projects</a>
+        <a href="#experience" class="hover:text-blue-400 transition py-1">Experience</a>
+        <a href="#contact" class="px-3.5 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition shadow-md shadow-blue-600/20">Contact</a>
+      </nav>
+    </header>
+
+    <!-- ========== 2. HERO / BIO BENTO CARD ========== -->
+    <section id="about" class="glass-card rounded-2xl p-6 sm:p-8 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+      <!-- Left Profile Column -->
+      <div class="flex flex-col items-center text-center md:border-r border-slate-800/80 md:pr-6">
+        <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-blue-500/40 mb-3.5 shadow-xl bg-slate-800">
+          <img src="https://i.ibb.co/ymnBq0Tz/your-image.jpg" onerror="this.src='https://placehold.co/300x300/1e293b/60a5fa?text=PAJ'" alt="Pair Ahmed Jiko" class="w-full h-full object-cover">
+        </div>
+        <h1 class="text-xl font-bold text-white mb-1">Pair Ahmed Jiko</h1>
+        <p class="text-[11px] text-blue-400 font-semibold uppercase tracking-wide mb-3.5 leading-snug">
+          Lab In-Charge (Biochemist) &amp; Research Assistant (CUET)
+        </p>
+        <!-- Social & Academic Links -->
+        <div class="flex flex-wrap justify-center gap-3 text-sm text-slate-400">
+          <a href="https://www.linkedin.com/in/pair-ahmed-jiko-3b3216190/" target="_blank" rel="noopener" class="w-8 h-8 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center justify-center hover:text-blue-400 hover:border-blue-500/40 transition" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.researchgate.net/profile/Pair-Jiko" target="_blank" rel="noopener" class="w-8 h-8 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center justify-center hover:text-emerald-400 hover:border-emerald-500/40 transition" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://scholar.google.com/citations?user=xTO_1HwAAAAJ&hl=en" target="_blank" rel="noopener" class="w-8 h-8 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center justify-center hover:text-blue-400 hover:border-blue-500/40 transition" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://orcid.org/0009-0008-2375-9729" target="_blank" rel="noopener" class="w-8 h-8 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center justify-center hover:text-lime-400 hover:border-lime-500/40 transition" title="ORCID"><i class="fab fa-orcid"></i></a>
+          <a href="https://www.facebook.com/pairahmed.jiko" target="_blank" rel="noopener" class="w-8 h-8 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center justify-center hover:text-blue-500 hover:border-blue-500/40 transition" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://pairahmedjiko.blogspot.com/" target="_blank" rel="noopener" class="w-8 h-8 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center justify-center hover:text-amber-400 hover:border-amber-500/40 transition" title="Research Blog"><i class="fas fa-rss"></i></a>
+        </div>
+      </div>
+      
+      <!-- Right Bio Column -->
+      <div class="md:col-span-2 space-y-3.5">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-2.5 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-semibold rounded-full border border-blue-500/20">✨ AI Profile Overview</span>
+          <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold rounded-full border border-emerald-500/20">Chattogram, Bangladesh</span>
+        </div>
+        <h2 class="text-lg sm:text-xl font-bold text-white">Clinical Biochemistry, Molecular Biology &amp; Biomedical Research</h2>
+        <p class="text-xs sm:text-[13px] text-slate-300 leading-relaxed">
+          I am a cheerful, optimistic, and highly self-motivated researcher committed to scientific excellence. Serving as <strong>Lab In-Charge (Biochemist)</strong> at IAHS Hospital – USTC and <strong>Research Assistant</strong> at CUET, my work integrates in-vivo and in-vitro pharmacological assays, phytochemistry, cancer biology, genetics, and molecular epidemiology, alongside ISO 15189:2022 clinical diagnostic laboratory quality management.
+        </p>
+        <div class="flex flex-wrap gap-2.5 pt-1">
+          <button onclick="document.getElementById('cvModal').classList.remove('hidden')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-semibold transition border border-slate-700 flex items-center gap-1.5">
+            <i class="fas fa-file-pdf text-blue-400"></i> View CV
+          </button>
+          <a href="CV_Pair Ahmed Jiko (2026).pdf" download class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-md shadow-blue-600/20">
+            <i class="fas fa-download"></i> Download CV
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 3. INTERACTIVE AI BIOMEDICAL AUTOMATION SANDBOX ========== -->
+    <section class="glass-card rounded-2xl p-6 space-y-4">
+      <div class="flex flex-wrap justify-between items-center gap-2">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <i class="fas fa-robot text-blue-400"></i> Interactive AI Biomedical Automation Sandbox
+        </h3>
+        <span class="text-[10px] bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 px-2.5 py-0.5 rounded-full font-medium">Live Simulator</span>
+      </div>
+      <p class="text-xs text-slate-400">Select an automated workflow pipeline below to simulate real-time laboratory data processing and computational execution:</p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <button onclick="runAiSim(1)" class="p-3.5 bg-slate-900/80 hover:bg-slate-800 rounded-xl border border-slate-800 hover:border-blue-500/40 text-left transition group">
+          <span class="block text-xs font-bold text-blue-400 mb-1 group-hover:translate-x-0.5 transition"><i class="fas fa-dna mr-1.5"></i>1. In-Silico Molecular Docking</span>
+          <span class="text-[11px] text-slate-400">Mucuna pruriens bioactive analysis</span>
+        </button>
+        <button onclick="runAiSim(2)" class="p-3.5 bg-slate-900/80 hover:bg-slate-800 rounded-xl border border-slate-800 hover:border-purple-500/40 text-left transition group">
+          <span class="block text-xs font-bold text-purple-400 mb-1 group-hover:translate-x-0.5 transition"><i class="fas fa-vials mr-1.5"></i>2. Dengue Serotype Triage</span>
+          <span class="text-[11px] text-slate-400">2024 outbreak telemetry pipeline</span>
+        </button>
+        <button onclick="runAiSim(3)" class="p-3.5 bg-slate-900/80 hover:bg-slate-800 rounded-xl border border-slate-800 hover:border-emerald-500/40 text-left transition group">
+          <span class="block text-xs font-bold text-emerald-400 mb-1 group-hover:translate-x-0.5 transition"><i class="fas fa-certificate mr-1.5"></i>3. ISO 15189 QC Auditor</span>
+          <span class="text-[11px] text-slate-400">Medical laboratory compliance check</span>
+        </button>
+      </div>
+      <div id="simOutput" class="hidden p-4 bg-slate-950 rounded-xl border border-slate-800 text-[11px] font-mono text-emerald-400 whitespace-pre-line leading-relaxed"></div>
+    </section>
+
+    <!-- ========== 4. COLLAPSIBLE SELECTED PUBLICATIONS WITH SYNCED CATEGORY TABS ========== -->
+    <section id="publications" class="glass-card rounded-2xl p-6 space-y-4">
+      <div class="flex flex-wrap justify-between items-center gap-3">
+        <div>
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <i class="fas fa-file-alt text-blue-400"></i> Selected Publications (7)
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">Filter by research domain or expand to read peer-reviewed works and AI clinical summaries.</p>
+        </div>
+        <button id="pubExpandBtn" onclick="toggleSection('pubContent', this)" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded-xl text-xs font-semibold transition border border-slate-700 flex items-center gap-1.5">
+          <i class="fas fa-chevron-down"></i> <span>Expand Publications</span>
+        </button>
+      </div>
+
+      <!-- Collapsible Container -->
+      <div id="pubContent" class="hidden space-y-4 pt-2 border-t border-slate-800/80">
+        <!-- Category Filter Tabs (Synced with Navbar Dropdown) -->
+        <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+          <div class="flex flex-wrap gap-1.5 text-[11px]">
+            <button onclick="filterPubCategory('all')" data-cat="all" class="pub-tab-btn px-3 py-1.5 rounded-lg font-semibold bg-blue-600 text-white transition">All (7)</button>
+            <button onclick="filterPubCategory('journal')" data-cat="journal" class="pub-tab-btn px-3 py-1.5 rounded-lg font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Journal Articles (6)</button>
+            <button onclick="filterPubCategory('preprint')" data-cat="preprint" class="pub-tab-btn px-3 py-1.5 rounded-lg font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Pre-Prints (1)</button>
+            <button onclick="filterPubCategory('phytochem')" data-cat="phytochem" class="pub-tab-btn px-3 py-1.5 rounded-lg font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Phytochemistry &amp; Drug Discovery (6)</button>
+            <button onclick="filterPubCategory('clinical')" data-cat="clinical" class="pub-tab-btn px-3 py-1.5 rounded-lg font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Clinical &amp; Public Health (1)</button>
+          </div>
+          <span id="pubFilterStatus" class="text-[11px] text-slate-400 px-2">Showing 7 of 7</span>
+        </div>
+
+        <!-- Publications List -->
+        <div id="pubList" class="space-y-3">
+          <!-- Pub 1 -->
+          <div class="pub-card p-4 bg-slate-900/60 rounded-xl border border-slate-800 space-y-2 text-xs" data-category="journal phytochem">
+            <div class="flex flex-wrap justify-between items-center gap-2">
+              <div class="flex gap-1.5">
+                <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-semibold rounded text-[10px]">Journal Article</span>
+                <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 font-semibold rounded text-[10px]">Phytochemistry</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-medium">2024</span>
+            </div>
+            <p class="text-slate-200 leading-relaxed">
+              <strong>Jiko, P.A.</strong>, Mohammad, M., Richi, F. T., et al. (2024). Anti-Inflammatory, Analgesic and Anti-Oxidant Effects of <em>Shirakiopsis Indica</em> (Willd). Fruit Extract: A Mangrove Species in the Field of Inflammation Research. <em>Journal of Inflammation Research</em>.
+            </p>
+            <div class="flex flex-wrap justify-between items-center gap-2 text-[11px] pt-1">
+              <a href="https://doi.org/10.2147/JIR.S470835" target="_blank" rel="noopener" class="text-blue-400 hover:underline font-mono">DOI: 10.2147/JIR.S470835</a>
+              <button onclick="toggleAISummary(this)" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+                <i class="fas fa-wand-magic-sparkles"></i> AI Summary
+              </button>
+            </div>
+            <div class="hidden bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 text-[11px] leading-relaxed">
+              <strong class="text-emerald-400">AI Clinical Takeaway:</strong> Evaluates the bioactive pharmacological potential of mangrove fruit extracts (<em>Shirakiopsis indica</em>) in attenuating inflammatory cascades, pain responses, and oxidative stress pathways in vivo.
+            </div>
+          </div>
+
+          <!-- Pub 2 -->
+          <div class="pub-card p-4 bg-slate-900/60 rounded-xl border border-slate-800 space-y-2 text-xs" data-category="journal phytochem">
+            <div class="flex flex-wrap justify-between items-center gap-2">
+              <div class="flex gap-1.5">
+                <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-semibold rounded text-[10px]">Journal Article</span>
+                <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 font-semibold rounded text-[10px]">Phytochemistry</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-medium">2026</span>
+            </div>
+            <p class="text-slate-200 leading-relaxed">
+              Sutradhar, R. K., <strong>Jiko, P. A.</strong>, Hossain, M. S., et al. (2026). Isolation, Characterization and in silico Studies of Bioactive Terpenoid and Flavonoid from the Seeds of <em>Mucuna pruriens</em>. <em>Asian Journal of Chemistry</em>.
+            </p>
+            <div class="flex flex-wrap justify-between items-center gap-2 text-[11px] pt-1">
+              <a href="https://doi.org/10.14233/ajchem.2026.35289" target="_blank" rel="noopener" class="text-blue-400 hover:underline font-mono">DOI: 10.14233/ajchem.2026.35289</a>
+              <button onclick="toggleAISummary(this)" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+                <i class="fas fa-wand-magic-sparkles"></i> AI Summary
+              </button>
+            </div>
+            <div class="hidden bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 text-[11px] leading-relaxed">
+              <strong class="text-emerald-400">AI Clinical Takeaway:</strong> Combines chromatographic isolation and spectroscopic structural characterization of terpenoids and flavonoids from <em>Mucuna pruriens</em> seeds with in-silico molecular docking to elucidate receptor binding mechanisms.
+            </div>
+          </div>
+
+          <!-- Pub 3 -->
+          <div class="pub-card p-4 bg-slate-900/60 rounded-xl border border-slate-800 space-y-2 text-xs" data-category="journal clinical">
+            <div class="flex flex-wrap justify-between items-center gap-2">
+              <div class="flex gap-1.5">
+                <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-semibold rounded text-[10px]">Journal Article</span>
+                <span class="px-2 py-0.5 bg-rose-500/10 text-rose-400 font-semibold rounded text-[10px]">Clinical &amp; Public Health</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-medium">2026</span>
+            </div>
+            <p class="text-slate-200 leading-relaxed">
+              Chowdhury, S. N., Majumder, S., Joy, M. I. S., ... <strong>Jiko, P. A.</strong> (Corresponding author) (2026). Hypomagnesemia and its clinical outcome: a prospective observational study in a tertiary care hospital in Bangladesh. <em>Annals of Medicine &amp; Surgery</em>.
+            </p>
+            <div class="flex flex-wrap justify-between items-center gap-2 text-[11px] pt-1">
+              <a href="https://doi.org/10.1097/MS9.0000000000005242" target="_blank" rel="noopener" class="text-blue-400 hover:underline font-mono">DOI: 10.1097/MS9.0000000000005242</a>
+              <button onclick="toggleAISummary(this)" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+                <i class="fas fa-wand-magic-sparkles"></i> AI Summary
+              </button>
+            </div>
+            <div class="hidden bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 text-[11px] leading-relaxed">
+              <strong class="text-emerald-400">AI Clinical Takeaway:</strong> Prospective clinical investigation demonstrating how serum magnesium deficiency correlates with morbidity, ICU stay duration, and patient outcomes in a tertiary care hospital setting.
+            </div>
+          </div>
+
+          <!-- Pub 4 -->
+          <div class="pub-card p-4 bg-slate-900/60 rounded-xl border border-slate-800 space-y-2 text-xs" data-category="preprint phytochem">
+            <div class="flex flex-wrap justify-between items-center gap-2">
+              <div class="flex gap-1.5">
+                <span class="px-2 py-0.5 bg-purple-500/10 text-purple-400 font-semibold rounded text-[10px]">Pre-Print</span>
+                <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 font-semibold rounded text-[10px]">Phytochemistry</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-medium">2026</span>
+            </div>
+            <p class="text-slate-200 leading-relaxed">
+              Nipa, F. A., <strong>Jiko, P. A.</strong> (Corresponding author), et al. (2026). Antidiabetic Potential of <em>Ficus hispida</em> Fruit Extract in Alloxan-Induced Swiss Albino Diabetic Mice: In Vivo and Molecular Docking Study. <em>Research Square Pre-Print</em>.
+            </p>
+            <div class="flex flex-wrap justify-between items-center gap-2 text-[11px] pt-1">
+              <a href="https://doi.org/10.21203/rs.3.rs-10568437/v1" target="_blank" rel="noopener" class="text-blue-400 hover:underline font-mono">DOI: 10.21203/rs.3.rs-10568437/v1</a>
+              <button onclick="toggleAISummary(this)" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+                <i class="fas fa-wand-magic-sparkles"></i> AI Summary
+              </button>
+            </div>
+            <div class="hidden bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 text-[11px] leading-relaxed">
+              <strong class="text-emerald-400">AI Clinical Takeaway:</strong> Demonstrates significant antihyperglycemic efficacy of <em>Ficus hispida</em> fruit extract in diabetic murine models, validated via computational molecular docking against glycemic targets.
+            </div>
+          </div>
+
+          <!-- Pub 5 -->
+          <div class="pub-card p-4 bg-slate-900/60 rounded-xl border border-slate-800 space-y-2 text-xs" data-category="journal phytochem">
+            <div class="flex flex-wrap justify-between items-center gap-2">
+              <div class="flex gap-1.5">
+                <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-semibold rounded text-[10px]">Journal Article</span>
+                <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 font-semibold rounded text-[10px]">Phytochemistry</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-medium">2025</span>
+            </div>
+            <p class="text-slate-200 leading-relaxed">
+              Mohammad, M., Richi, T., ... <strong>Jiko, P. A.</strong>, et al. (2025). Amelioration of hepatic injury through oxidative stress management employing methanolic extract of Crepe-ginger (<em>Cheilocostus speciosus</em>). <em>Journal of Chemistry &amp; Biodiversity</em>.
+            </p>
+            <div class="flex flex-wrap justify-between items-center gap-2 text-[11px] pt-1">
+              <a href="https://doi.org/10.1002/cbdv.202500261" target="_blank" rel="noopener" class="text-blue-400 hover:underline font-mono">DOI: 10.1002/cbdv.202500261</a>
+              <button onclick="toggleAISummary(this)" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+                <i class="fas fa-wand-magic-sparkles"></i> AI Summary
+              </button>
+            </div>
+            <div class="hidden bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 text-[11px] leading-relaxed">
+              <strong class="text-emerald-400">AI Clinical Takeaway:</strong> Shows hepatoprotective activity of <em>Cheilocostus speciosus</em> methanolic extract through restoration of endogenous antioxidant enzyme levels and reduction of lipid peroxidation.
+            </div>
+          </div>
+
+          <!-- Pub 6 -->
+          <div class="pub-card p-4 bg-slate-900/60 rounded-xl border border-slate-800 space-y-2 text-xs" data-category="journal phytochem">
+            <div class="flex flex-wrap justify-between items-center gap-2">
+              <div class="flex gap-1.5">
+                <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-semibold rounded text-[10px]">Journal Article</span>
+                <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 font-semibold rounded text-[10px]">Phytochemistry</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-medium">2025</span>
+            </div>
+            <p class="text-slate-200 leading-relaxed">
+              Mohammad, M., Richi, T., Hossain, R., ... <strong>Jiko, P. A.</strong>, et al. (2025). A hepatoprotective experiment on taro vegetable (<em>Colocasia esculenta</em> (L.) Schott) flower employing animal models by mitigating oxidative stress. <em>Animal Models and Experimental Medicine</em>.
+            </p>
+            <div class="flex flex-wrap justify-between items-center gap-2 text-[11px] pt-1">
+              <a href="https://doi.org/10.1002/ame2.70031" target="_blank" rel="noopener" class="text-blue-400 hover:underline font-mono">DOI: 10.1002/ame2.70031</a>
+              <button onclick="toggleAISummary(this)" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+                <i class="fas fa-wand-magic-sparkles"></i> AI Summary
+              </button>
+            </div>
+            <div class="hidden bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 text-[11px] leading-relaxed">
+              <strong class="text-emerald-400">AI Clinical Takeaway:</strong> Establishes liver-protective properties of <em>Colocasia esculenta</em> floral extracts by normalizing hepatic transaminases and mitigating free-radical injury.
+            </div>
+          </div>
+
+          <!-- Pub 7 -->
+          <div class="pub-card p-4 bg-slate-900/60 rounded-xl border border-slate-800 space-y-2 text-xs" data-category="journal phytochem">
+            <div class="flex flex-wrap justify-between items-center gap-2">
+              <div class="flex gap-1.5">
+                <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 font-semibold rounded text-[10px]">Journal Article</span>
+                <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 font-semibold rounded text-[10px]">Phytochemistry</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-medium">2025</span>
+            </div>
+            <p class="text-slate-200 leading-relaxed">
+              Sutradhar, R. K., Hossain, M. S., <strong>Jiko, P. A.</strong>, et al. (2025). Isolation, Characterization and Molecular Docking Studies of Bioactive Phytoconstituents from the Seeds of <em>Mucuna pruriens</em>. <em>Oriental Journal of Chemistry</em>.
+            </p>
+            <div class="flex flex-wrap justify-between items-center gap-2 text-[11px] pt-1">
+              <a href="https://doi.org/10.13005/ojc/410528" target="_blank" rel="noopener" class="text-blue-400 hover:underline font-mono">DOI: 10.13005/ojc/410528</a>
+              <button onclick="toggleAISummary(this)" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+                <i class="fas fa-wand-magic-sparkles"></i> AI Summary
+              </button>
+            </div>
+            <div class="hidden bg-slate-950 p-3 rounded-lg border border-slate-800 text-slate-300 text-[11px] leading-relaxed">
+              <strong class="text-emerald-400">AI Clinical Takeaway:</strong> Details purification and computational ligand-protein interaction profiling of neuroactive and antioxidant phytoconstituents from <em>Mucuna pruriens</em>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 5. COLLAPSIBLE RESEARCH PROJECTS & CLINICAL TRIALS / REVIEWER ROLES ========== -->
+    <section id="projects" class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+      
+      <!-- Research & Projects Card (All 12 Projects) -->
+      <div class="glass-card rounded-2xl p-5 space-y-3">
+        <div class="flex justify-between items-start gap-2">
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fas fa-flask text-blue-400"></i> Research &amp; Projects (12)
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">Molecular epidemiology, clinical biomarkers &amp; drug discovery.</p>
+          </div>
+          <button onclick="toggleSection('projContent', this)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded-xl text-xs font-semibold transition border border-slate-700 shrink-0 flex items-center gap-1">
+            <i class="fas fa-chevron-down"></i> <span>Expand (12)</span>
+          </button>
+        </div>
+        
+        <!-- Preview Top 2 Projects -->
+        <div class="space-y-2 text-xs pt-1">
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1">
+            <div class="flex justify-between items-center">
+              <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold rounded">Active • Epidemiology</span>
+              <span class="text-[10px] text-slate-400">2024–Present</span>
+            </div>
+            <p class="text-slate-200"><strong>Lead Coordinator:</strong> Molecular Epidemiology of Circulating Dengue Serotypes in Chattogram (2024 Outbreak).</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1">
+            <div class="flex justify-between items-center">
+              <span class="px-2 py-0.5 bg-blue-500/10 text-blue-400 text-[10px] font-semibold rounded">Completed • Phytochemistry</span>
+              <span class="text-[10px] text-slate-400">CUET</span>
+            </div>
+            <p class="text-slate-200"><strong>Research Assistant:</strong> Isolation, Characterization &amp; In-Silico Studies of Terpenoids and Flavonoids from <em>Mucuna pruriens</em>.</p>
+          </div>
+        </div>
+
+        <!-- Remaining 10 Projects (Hidden until Expanded) -->
+        <div id="projContent" class="hidden space-y-2 text-xs pt-1">
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1">
+            <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold rounded">Active • Clinical Biomarkers</span>
+            <p class="text-slate-200"><strong>Co-Principal Investigator:</strong> Triglyceride-Glucose (TyG) Index &amp; HbA1C Levels as Early Prediabetes Biomarkers (USTC).</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1">
+            <span class="px-2 py-0.5 bg-purple-500/10 text-purple-400 text-[10px] font-semibold rounded">Active • Hematology &amp; Genetics</span>
+            <p class="text-slate-200"><strong>Co-Investigator:</strong> Molecular &amp; Hematological Characterization of Hemoglobin Disorders (Thalassemia &amp; HbE) in Chattogram.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1">
+            <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 text-[10px] font-semibold rounded">Completed • Public Health</span>
+            <p class="text-slate-200"><strong>Lead Project Coordinator:</strong> Community Knowledge, Attitude, and Preventive Practices (KAP) Toward Dengue Fever in Urban Chattogram.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1">
+            <span class="px-2 py-0.5 bg-rose-500/10 text-rose-400 text-[10px] font-semibold rounded">Completed • AMR &amp; Microbiology</span>
+            <p class="text-slate-200"><strong>Project Coordinator:</strong> Detection of Integron-Mediated Carbapenemase Resistance Genes in Clinical Gram-Negative Isolates (CVASU).</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1">
+            <span class="px-2 py-0.5 bg-blue-500/10 text-blue-400 text-[10px] font-semibold rounded">Clinical Study • Nephrology/ICU</span>
+            <p class="text-slate-200"><strong>Corresponding Investigator:</strong> Prospective Observational Evaluation of Hypomagnesemia and Clinical Outcomes in Tertiary Care Patients.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1">
+            <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 text-[10px] font-semibold rounded">Pharmacology • In-Vivo</span>
+            <p class="text-slate-200"><strong>Co-Investigator:</strong> Antidiabetic &amp; Pancreatic Protective Potential of <em>Ficus hispida</em> Fruit Extract in Alloxan-Induced Diabetic Mice.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1">
+            <span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 text-[10px] font-semibold rounded">Pharmacology • Mangrove Flora</span>
+            <p class="text-slate-200"><strong>Lead Researcher:</strong> Anti-Inflammatory, Analgesic, and Antioxidant Profiling of <em>Shirakiopsis indica</em> Mangrove Fruit Extract.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1">
+            <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold rounded">Hepatoprotection • Animal Model</span>
+            <p class="text-slate-200"><strong>Co-Researcher:</strong> Oxidative Stress Amelioration and Hepatoprotective Efficacy of <em>Cheilocostus speciosus</em> Methanolic Extract.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1">
+            <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-[10px] font-semibold rounded">Hepatoprotection • Phytotherapy</span>
+            <p class="text-slate-200"><strong>Co-Researcher:</strong> Hepatic Tissue Protection via <em>Colocasia esculenta</em> (Taro) Floral Bioactives in Experimental Models.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 space-y-1">
+            <span class="px-2 py-0.5 bg-purple-500/10 text-purple-400 text-[10px] font-semibold rounded">Quality Assurance • Diagnostics</span>
+            <p class="text-slate-200"><strong>Lab Lead:</strong> ISO 15189:2022 Six-Sigma Quality Control &amp; Method Verification Protocol Implementation at IAHS Hospital – USTC.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clinical Trials & Peer Reviewer Roles Card -->
+      <div class="glass-card rounded-2xl p-5 space-y-3">
+        <div class="flex justify-between items-start gap-2">
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fas fa-microscope text-emerald-400"></i> Clinical Trials &amp; Peer Review
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">ClinicalTrials.gov registrations &amp; editorial boards.</p>
+          </div>
+          <button onclick="toggleSection('trialContent', this)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded-xl text-xs font-semibold transition border border-slate-700 shrink-0 flex items-center gap-1">
+            <i class="fas fa-chevron-down"></i> <span>Expand</span>
+          </button>
+        </div>
+        
+        <!-- Preview Top 2 Trials -->
+        <div class="space-y-2 text-xs pt-1">
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center">
+            <div>
+              <span class="block text-slate-200 font-semibold">ClinicalTrials.gov Registry</span>
+              <span class="text-[11px] text-slate-400">Registered Clinical Study Protocol</span>
+            </div>
+            <a href="https://clinicaltrials.gov/study/NCT07089004" target="_blank" rel="noopener" class="font-mono text-blue-400 hover:underline font-bold bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-500/20">NCT07089004</a>
+          </div>
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center">
+            <div>
+              <span class="block text-slate-200 font-semibold">ClinicalTrials.gov Registry</span>
+              <span class="text-[11px] text-slate-400">Registered Clinical Study Protocol</span>
+            </div>
+            <a href="https://clinicaltrials.gov/study/NCT07207551" target="_blank" rel="noopener" class="font-mono text-blue-400 hover:underline font-bold bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-500/20">NCT07207551</a>
+          </div>
+        </div>
+
+        <!-- Expanded Trials & Peer Reviewer Roles -->
+        <div id="trialContent" class="hidden space-y-2 text-xs pt-1">
+          <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center">
+            <div>
+              <span class="block text-slate-200 font-semibold">ClinicalTrials.gov Registry</span>
+              <span class="text-[11px] text-slate-400">Registered Clinical Study Protocol</span>
+            </div>
+            <a href="https://clinicaltrials.gov/study/NCT07305181" target="_blank" rel="noopener" class="font-mono text-blue-400 hover:underline font-bold bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-500/20">NCT07305181</a>
+          </div>
+
+          <div class="pt-1">
+            <span class="block text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1.5 px-1">Editorial Peer Reviewer Boards</span>
+            <div class="space-y-2">
+              <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center">
+                <span class="font-bold text-white">Annals of Medicine</span>
+                <span class="text-[11px] text-slate-400">Peer Reviewer (Taylor &amp; Francis / Wolters Kluwer)</span>
+              </div>
+              <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center">
+                <span class="font-bold text-white">eFood</span>
+                <span class="text-[11px] text-slate-400">Peer Reviewer (Wiley)</span>
+              </div>
+              <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 flex justify-between items-center">
+                <span class="font-bold text-white">Chemistry &amp; Biodiversity</span>
+                <span class="text-[11px] text-slate-400">Peer Reviewer (Wiley)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========== 6. COLLAPSIBLE PROFESSIONAL EXPERIENCE, EDUCATION, TRAINING & SKILLS ========== -->
+    <section id="experience" class="glass-card rounded-2xl p-6 space-y-4">
+      <div class="flex flex-wrap justify-between items-center gap-3">
+        <div>
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <i class="fas fa-briefcase text-blue-400"></i> Professional Experience, Education, Training &amp; Skills
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">Explore 6 career appointments, 3 academic degrees, 7 specialized trainings, and technical competencies.</p>
+        </div>
+        <button onclick="toggleSection('expContent', this)" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded-xl text-xs font-semibold transition border border-slate-700 flex items-center gap-1.5">
+          <i class="fas fa-chevron-down"></i> <span>Expand Background</span>
+        </button>
+      </div>
+
+      <div id="expContent" class="hidden space-y-6 pt-3 border-t border-slate-800/80 text-xs">
+        
+        <!-- 6 Professional Experience Roles -->
+        <div>
+          <h4 class="font-bold mb-3 text-xs uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+            <i class="fas fa-id-badge"></i> Professional Experience (6 Roles)
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
+              <span class="text-emerald-400 font-semibold text-[11px]">Nov 2020 – Present</span>
+              <h5 class="font-bold text-white mt-0.5">Lab In-Charge (Biochemist)</h5>
+              <p class="text-slate-300 text-[11px] font-medium">IAHS Hospital – USTC, Chattogram</p>
+              <p class="text-slate-400 text-[11px] mt-1">Leading clinical biochemistry operations, automated analyzer calibration, internal/external QC, and ISO 15189:2022 laboratory accreditation management.</p>
+            </div>
+            <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
+              <span class="text-emerald-400 font-semibold text-[11px]">2024 – Present</span>
+              <h5 class="font-bold text-white mt-0.5">Lead Coordinator &amp; Co-Principal Investigator</h5>
+              <p class="text-slate-300 text-[11px] font-medium">Bangladesh Bioscience Research Group (BBRG)</p>
+              <p class="text-slate-400 text-[11px] mt-1">Coordinating multi-center clinical trials, molecular epidemiology studies on Dengue serotypes, and mentoring junior researchers in manuscript writing.</p>
+            </div>
+            <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
+              <span class="text-emerald-400 font-semibold text-[11px]">2023 – 2025</span>
+              <h5 class="font-bold text-white mt-0.5">Research Assistant (Natural Products &amp; In-Silico)</h5>
+              <p class="text-slate-300 text-[11px] font-medium">Chittagong University of Engineering &amp; Technology (CUET)</p>
+              <p class="text-slate-400 text-[11px] mt-1">Conducted phytochemical extraction, column chromatography, spectroscopic characterization, and computational molecular docking studies.</p>
+            </div>
+            <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
+              <span class="text-emerald-400 font-semibold text-[11px]">Sep 2025 – Mar 2026</span>
+              <h5 class="font-bold text-white mt-0.5">Scientific Officer (Quality Assurance)</h5>
+              <p class="text-slate-300 text-[11px] font-medium">Epic Health Care, Chattogram</p>
+              <p class="text-slate-400 text-[11px] mt-1">Oversaw ISO-accredited diagnostic quality assurance protocols, SOP compliance audits, and analytical method validation.</p>
+            </div>
+            <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
+              <span class="text-emerald-400 font-semibold text-[11px]">Sep 2021 – Aug 2022</span>
+              <h5 class="font-bold text-white mt-0.5">Molecular Biologist</h5>
+              <p class="text-slate-300 text-[11px] font-medium">Chevron Clinical Laboratory (COVID-19 RT-PCR Testing Lab)</p>
+              <p class="text-slate-400 text-[11px] mt-1">Performed viral RNA extraction, real-time RT-PCR amplification, biosafety level containment, and high-throughput diagnostic reporting.</p>
+            </div>
+            <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
+              <span class="text-emerald-400 font-semibold text-[11px]">2019 – 2020</span>
+              <h5 class="font-bold text-white mt-0.5">Undergraduate Research Intern</h5>
+              <p class="text-slate-300 text-[11px] font-medium">Department of Biochemistry &amp; Biotechnology, USTC</p>
+              <p class="text-slate-400 text-[11px] mt-1">Assisted in in-vivo pharmacological screening, biochemical assay standardization, and antimicrobial resistance profiling.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Academic Degrees -->
+        <div>
+          <h4 class="font-bold mb-3 text-xs uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+            <i class="fas fa-graduation-cap"></i> Education &amp; Academic Degrees (3)
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
+              <span class="text-blue-400 font-semibold text-[11px]">2025</span>
+              <h5 class="font-bold text-white mt-0.5">Master of Science (M.Sc.) in Chemistry</h5>
+              <p class="text-slate-300 text-[11px] mt-1">Chittagong University of Engineering &amp; Technology (CUET)</p>
+              <p class="text-slate-400 text-[10px] mt-1">Thesis: Bioactive Terpenoids &amp; Flavonoids from <em>Mucuna pruriens</em>.</p>
+            </div>
+            <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
+              <span class="text-blue-400 font-semibold text-[11px]">2024</span>
+              <h5 class="font-bold text-white mt-0.5">Master of Public Health (MPH)</h5>
+              <p class="text-slate-300 text-[11px] mt-1">Bangladesh Open University (BOU) / CMCH Study Centre</p>
+              <p class="text-slate-400 text-[10px] mt-1">Specialization: Epidemiology &amp; Infectious Disease Control.</p>
+            </div>
+            <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800">
+              <span class="text-blue-400 font-semibold text-[11px]">2021</span>
+              <h5 class="font-bold text-white mt-0.5">B.Sc. (Hons.) in Biochemistry &amp; Biotechnology</h5>
+              <p class="text-slate-300 text-[11px] mt-1">University of Science &amp; Technology Chittagong (USTC)</p>
+              <p class="text-slate-400 text-[10px] mt-1">First Class Honors with Clinical Laboratory Internship.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7 Specialized Trainings & Workshops -->
+        <div>
+          <h4 class="font-bold mb-3 text-xs uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+            <i class="fas fa-certificate"></i> Specialized Trainings &amp; Certifications (7)
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px]">
+            <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 flex items-start gap-2.5">
+              <span class="text-emerald-400 font-bold shrink-0">2025</span>
+              <span class="text-slate-200"><strong>ISO 15189:2022 Medical Laboratories Quality &amp; Competence</strong> — Bangladesh Accreditation Board (BAB).</span>
+            </div>
+            <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 flex items-start gap-2.5">
+              <span class="text-emerald-400 font-bold shrink-0">2025</span>
+              <span class="text-slate-200"><strong>Scientific Manuscript Writing &amp; Publication Ethics</strong> — International Centre for Diarrhoeal Disease Research, Bangladesh (icddr,b).</span>
+            </div>
+            <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 flex items-start gap-2.5">
+              <span class="text-emerald-400 font-bold shrink-0">2024</span>
+              <span class="text-slate-200"><strong>Good Clinical Practice (GCP) &amp; Clinical Trial Design</strong> — National Institute of Health / Research Ethics Workshop.</span>
+            </div>
+            <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 flex items-start gap-2.5">
+              <span class="text-emerald-400 font-bold shrink-0">2023</span>
+              <span class="text-slate-200"><strong>Computer-Aided Drug Design (CADD) &amp; Molecular Docking</strong> — Bioinformatics &amp; Computational Biology Workshop.</span>
+            </div>
+            <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 flex items-start gap-2.5">
+              <span class="text-emerald-400 font-bold shrink-0">2020</span>
+              <span class="text-slate-200"><strong>Basic Biotechnology &amp; Molecular Diagnostics</strong> — National Institute of Biotechnology (NIB), Savar, Dhaka.</span>
+            </div>
+            <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 flex items-start gap-2.5">
+              <span class="text-emerald-400 font-bold shrink-0">2019</span>
+              <span class="text-slate-200"><strong>CRISPR/Cas9 Genome Editing Hands-On Workshop</strong> — Global Network of Bangladeshi Biotechnologists (GNOBB).</span>
+            </div>
+            <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800 flex items-start gap-2.5 sm:col-span-2">
+              <span class="text-emerald-400 font-bold shrink-0">2018</span>
+              <span class="text-slate-200"><strong>Clinical Molecular Techniques, PCR &amp; Microbial Diagnostics</strong> — Chattogram Veterinary and Animal Sciences University (CVASU).</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Skills & Languages -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+          <div class="md:col-span-2 p-3.5 bg-slate-900/60 rounded-xl border border-slate-800 space-y-2">
+            <h4 class="font-bold text-xs uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+              <i class="fas fa-microchip"></i> Technical &amp; Laboratory Skills
+            </h4>
+            <div class="flex flex-wrap gap-1.5 text-[11px]">
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-lg border border-slate-700">ISO 15189:2022 QMS</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-lg border border-slate-700">Real-Time RT-PCR</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-lg border border-slate-700">ELISA &amp; CLIA</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-lg border border-slate-700">Clinical Biochemistry Analyzers</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-lg border border-slate-700">In-Vivo Animal Models</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-lg border border-slate-700">Phytochemical Isolation</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-lg border border-slate-700">AutoDock Vina &amp; PyMOL</span>
+              <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-lg border border-slate-700">SPSS, GraphPad Prism &amp; R</span>
+            </div>
+          </div>
+
+          <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800 space-y-2">
+            <h4 class="font-bold text-xs uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+              <i class="fas fa-language"></i> Languages
+            </h4>
+            <ul class="space-y-1.5 text-[11px] text-slate-300">
+              <li class="flex justify-between"><span>Bengali</span> <span class="text-emerald-400 font-semibold">Native</span></li>
+              <li class="flex justify-between"><span>English</span> <span class="text-blue-400 font-semibold">Fluent (Academic &amp; Clinical)</span></li>
+              <li class="flex justify-between"><span>Hindi / Urdu</span> <span class="text-slate-400">Conversational</span></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== 7. CONTACT FORM ========== -->
+    <section id="contact" class="glass-card rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto w-full space-y-4">
+      <div class="text-center">
+        <h3 class="text-lg font-bold text-white mb-1">Get in Touch</h3>
+        <p class="text-xs text-slate-400">For research collaboration, clinical laboratory consultancy, or mentorship requests.</p>
+      </div>
+      <form id="contactForm" class="space-y-3 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <input type="text" placeholder="Full Name" required class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-white outline-none focus:border-blue-500 transition">
+          <input type="email" placeholder="Email Address" required class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-white outline-none focus:border-blue-500 transition">
+        </div>
+        <select required class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-white outline-none focus:border-blue-500 transition">
+          <option value="" disabled selected>Select Inquiry Subject</option>
+          <option value="research">Research Collaboration</option>
+          <option value="clinical">Clinical Trial / Laboratory Consultancy</option>
+          <option value="publication">Publication / Peer-Review Inquiry</option>
+          <option value="other">Other</option>
+        </select>
+        <textarea rows="3" placeholder="Write your message here..." required class="w-full bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-white outline-none focus:border-blue-500 transition"></textarea>
+        <button type="submit" id="submitBtn" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition shadow-md shadow-blue-600/20">Send Message</button>
+      </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-[11px] text-slate-500 pb-6 space-y-1">
+      <p class="text-slate-400 font-medium">Pair Ahmed Jiko · 1534/B Sayed Shah Road, Chawkbazar, Chattogram 4203, Bangladesh</p>
+      <p>
+        <a href="mailto:pairahmed.bio@gmail.com" class="text-blue-400 hover:underline"><i class="fas fa-envelope mr-1"></i>pairahmed.bio@gmail.com</a>
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- ========== FLOATING JIKO AI TWIN CHAT WIDGET ========== -->
+  <div class="fixed bottom-5 right-5 z-50">
+    <button onclick="toggleChat()" aria-label="Open Jiko AI Twin" class="w-12 h-12 bg-blue-600 text-white rounded-full shadow-2xl shadow-blue-600/40 flex items-center justify-center hover:bg-blue-500 hover:scale-105 transition">
+      <i class="fas fa-robot text-base"></i>
+    </button>
+    <div id="chatBox" class="hidden absolute bottom-14 right-0 w-72 sm:w-80 bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col text-xs">
+      <div class="bg-slate-800 p-3 flex justify-between items-center font-bold text-white border-b border-slate-700">
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Jiko AI Twin</span>
+        <button onclick="toggleChat()" class="text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="chatBody" class="p-3 h-48 overflow-y-auto space-y-2 text-slate-300">
+        <div class="bg-slate-800/90 p-2.5 rounded-xl border border-slate-700/50 leading-relaxed">
+          Hello! Ask me about Pair Ahmed Jiko's ISO 15189 lab leadership, Dengue research, publications, or clinical trials (NCT07089004).
+        </div>
+      </div>
+      <!-- Quick Prompt Pills -->
+      <div class="px-2.5 py-1.5 bg-slate-950/60 border-t border-slate-800 flex gap-1.5 overflow-x-auto">
+        <button onclick="quickAsk('Dengue research')" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-[10px] text-blue-300 rounded-md whitespace-nowrap transition">Dengue Study</button>
+        <button onclick="quickAsk('Clinical trials')" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-[10px] text-emerald-300 rounded-md whitespace-nowrap transition">Clinical Trials</button>
+        <button onclick="quickAsk('Education')" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-[10px] text-purple-300 rounded-md whitespace-nowrap transition">Education</button>
+      </div>
+      <div class="p-2 border-t border-slate-800 flex gap-1.5 bg-slate-900">
+        <input type="text" id="chatInput" onkeypress="if(event.key==='Enter') sendMsg()" placeholder="Ask anything..." class="flex-1 bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white outline-none focus:border-blue-500">
+        <button onclick="sendMsg()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg font-medium transition">Ask</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== CV PDF MODAL VIEWER ========== -->
+  <div id="cvModal" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl h-[85vh] rounded-2xl flex flex-col overflow-hidden shadow-2xl">
+      <div class="p-3.5 border-b border-slate-800 flex justify-between items-center">
+        <h3 class="text-white font-bold text-xs flex items-center gap-2">
+          <i class="fas fa-file-pdf text-blue-400"></i> Curriculum Vitae — Pair Ahmed Jiko (2026)
+        </h3>
+        <div class="flex items-center gap-3">
+          <a href="CV_Pair Ahmed Jiko (2026).pdf" download class="text-xs text-blue-400 hover:underline font-semibold"><i class="fas fa-download mr-1"></i>Download</a>
+          <button onclick="document.getElementById('cvModal').classList.add('hidden')" class="text-slate-400 hover:text-white"><i class="fas fa-times text-base"></i></button>
+        </div>
+      </div>
+      <div class="flex-1 bg-slate-950">
+        <iframe src="CV_Pair Ahmed Jiko (2026).pdf" class="w-full h-full border-none"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== JAVASCRIPT LOGIC ========== -->
+  <script>
+    // Toggle Navbar Publications Dropdown on Mobile/Click
+    function toggleNavDropdown() {
+      const menu = document.getElementById('pubDropdownMenu');
+      menu.classList.toggle('open');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      const container = document.getElementById('pubNavDropdown');
+      const menu = document.getElementById('pubDropdownMenu');
+      if (container && !container.contains(e.target)) {
+        menu.classList.remove('open');
+      }
+    });
+
+    // Navigate from Navbar Dropdown -> Scroll to Publications, Auto-Expand, and Filter Category
+    function navigateAndFilterPubs(category) {
+      // Close dropdown menu
+      document.getElementById('pubDropdownMenu').classList.remove('open');
+
+      // Expand Publications section if currently collapsed
+      const pubContent = document.getElementById('pubContent');
+      const pubBtn = document.getElementById('pubExpandBtn');
+      if (pubContent.classList.contains('hidden')) {
+        pubContent.classList.remove('hidden');
+        pubBtn.innerHTML = '<i class="fas fa-chevron-up"></i> <span>Collapse Publications</span>';
+      }
+
+      // Apply category filter
+      filterPubCategory(category);
+
+      // Smooth scroll to Publications section
+      document.getElementById('publications').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Filter Publications by Category & Sync Tab Button Styles
+    function filterPubCategory(category) {
+      const tabs = document.querySelectorAll('.pub-tab-btn');
+      tabs.forEach(tab => {
+        if (tab.getAttribute('data-cat') === category) {
+          tab.className = 'pub-tab-btn px-3 py-1.5 rounded-lg font-semibold bg-blue-600 text-white transition';
+        } else {
+          tab.className = 'pub-tab-btn px-3 py-1.5 rounded-lg font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition';
+        }
+      });
+
+      const cards = document.querySelectorAll('.pub-card');
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const categories = card.getAttribute('data-category');
+        if (category === 'all' || categories.includes(category)) {
+          card.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const statusEl = document.getElementById('pubFilterStatus');
+      if (statusEl) {
+        statusEl.textContent = `Showing ${visibleCount} of ${cards.length}`;
+      }
+    }
+
+    // Universal Expand/Collapse Toggle for Sections
+    function toggleSection(id, btn) {
+      const content = document.getElementById(id);
+      content.classList.toggle('hidden');
+      const isHidden = content.classList.contains('hidden');
+      
+      if (id === 'pubContent') {
+        btn.innerHTML = isHidden ? '<i class="fas fa-chevron-down"></i> <span>Expand Publications</span>' : '<i class="fas fa-chevron-up"></i> <span>Collapse Publications</span>';
+      } else if (id === 'expContent') {
+        btn.innerHTML = isHidden ? '<i class="fas fa-chevron-down"></i> <span>Expand Background</span>' : '<i class="fas fa-chevron-up"></i> <span>Collapse Background</span>';
+      } else if (id === 'projContent') {
+        btn.innerHTML = isHidden ? '<i class="fas fa-chevron-down"></i> <span>Expand (12)</span>' : '<i class="fas fa-chevron-up"></i> <span>Collapse</span>';
+      } else {
+        btn.innerHTML = isHidden ? '<i class="fas fa-chevron-down"></i> <span>Expand</span>' : '<i class="fas fa-chevron-up"></i> <span>Collapse</span>';
+      }
+    }
+
+    // AI Publication Summary Toggle
+    function toggleAISummary(btn) {
+      const summaryBox = btn.parentElement.nextElementSibling;
+      summaryBox.classList.toggle('hidden');
+    }
+
+    // Interactive AI Simulator Sandbox
+    function runAiSim(type) {
+      const output = document.getElementById('simOutput');
+      output.classList.remove('hidden');
+      const simulations = {
+        1: "> Initializing AutoDock Vina pipeline...\n> Target: Mucuna pruriens seed terpenoids & flavonoids.\n> Binding Affinity Score: -8.4 kcal/mol (Stable receptor-ligand interaction verified).",
+        2: "> Fetching 2024 Chattogram Outbreak molecular telemetry...\n> RT-PCR Serotype Identification: DENV-2 and DENV-3 dominant strains detected.\n> Epidemiological triage logs compiled successfully.",
+        3: "> Running ISO 15189:2022 clinical laboratory quality audit protocol...\n> Analyzer Calibration & IQC: PASS (Six-Sigma variance < 1.2%).\n> Accreditation Compliance Status: Fully Verified."
+      };
+      output.textContent = simulations[type];
+    }
+
+    // Floating AI Chat Widget
+    function toggleChat() {
+      document.getElementById('chatBox').classList.toggle('hidden');
+    }
+
+    function quickAsk(topic) {
+      document.getElementById('chatInput').value = topic;
+      sendMsg();
+    }
+
+    function sendMsg() {
+      const input = document.getElementById('chatInput');
+      const body = document.getElementById('chatBody');
+      if (!input.value.trim()) return;
+      
+      const userText = input.value;
+      body.innerHTML += `<div class="bg-blue-600/20 text-blue-200 p-2 rounded-xl text-right border border-blue-500/20">${userText}</div>`;
+      const val = userText.toLowerCase();
+      input.value = '';
+      
+      setTimeout(() => {
+        let reply = "Pair Ahmed Jiko is Lab In-Charge (Biochemist) at IAHS Hospital – USTC and Research Assistant at CUET, specializing in ISO 15189 diagnostics, phytochemistry, and molecular epidemiology.";
+        if (val.includes('dengue')) {
+          reply = "He serves as Lead Coordinator investigating circulating Dengue serotypes in Chattogram during the 2024 outbreak as well as community KAP studies.";
+        } else if (val.includes('trial') || val.includes('nct')) {
+          reply = "He has 3 registered studies on ClinicalTrials.gov: NCT07089004, NCT07207551, and NCT07305181.";
+        } else if (val.includes('education') || val.includes('degree') || val.includes('cuet')) {
+          reply = "He holds an M.Sc. in Chemistry from CUET (2025), an MPH from BOU/CMCH (2024), and a B.Sc. in Biochemistry & Biotechnology from USTC (2021).";
+        } else if (val.includes('pub') || val.includes('paper')) {
+          reply = "He has 7 publications across journals like Journal of Inflammation Research, Annals of Medicine & Surgery, and Chemistry & Biodiversity. Use the Publications dropdown in the navbar to filter them!";
+        } else if (val.includes('email') || val.includes('contact')) {
+          reply = "You can reach him directly at pairahmed.bio@gmail.com or via the Contact form below.";
+        }
+        body.innerHTML += `<div class="bg-slate-800/90 p-2 rounded-xl border border-slate-700/50 leading-relaxed">${reply}</div>`;
+        body.scrollTop = body.scrollHeight;
+      }, 350);
+    }
+
+    // Contact Form Submission Feedback
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = "Sending Message...";
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = "Message Sent Successfully!";
+        btn.classList.replace('bg-blue-600', 'bg-emerald-600');
+        this.reset();
+        setTimeout(() => {
+          btn.textContent = "Send Message";
+          btn.classList.replace('bg-emerald-600', 'bg-blue-600');
+          btn.disabled = false;
+        }, 3000);
+      }, 800);
+    });
+  </script>
+</body>
+</html>
